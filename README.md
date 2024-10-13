@@ -1,36 +1,11 @@
-## This repo is currently a work in progress 
-- The README.md will be fully updated once the repo is in a stable state
-
-
-## TODO
-- Need to automate Rust project (xbnet)
-    - Configure (looks good)
-    - Build
-    - Deploy
-        - On Ubuntu for testing
-        - On Linux for Tegra for TX2
-        - On Jetson Orin
-- Working on setup_host_device.sh
-    - Issues with bridging interfaces
-- Need to add setup_end_device.sh
-- Need to dockerize service
-- Possibly may need to bridge docker xbnet network with local wifi interface as well
-- Make a submodule of xbnet, or copy over raw files, depending on future decisions
-
-
----
-&nbsp;
-&nbsp;
-
-
-# SERVICES-XBEE_NET
+# XBNET
 
 This project contains a Dockerized setup to create and manage an XBee network using the `xbnet` utility. The network interface is bridged with a host Wi-Fi interface, enabling internet access for connected devices.
 ##### Note: This project uses the `tap` xbnet protocol, which is a layer 2 protocol. This supports full ethernet pipeline. For a simple IP level protocol support, the `tun` xbnet protocol can be used. 
 
 ## File Structure
 ```bash
-services-xbee_net/
+xbnet/
 ├── scripts/
 │   ├── entrypoint.sh                   # Entrypoint script for Docker container
 │   ├── get_connected_wifi_info.sh      # Script to fetch connected Wi-Fi device information
