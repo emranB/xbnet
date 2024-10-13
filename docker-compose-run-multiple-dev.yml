@@ -1,0 +1,42 @@
+# TODO: This will not work with current configuration
+# Use a bash script to either dynamicall generate this file or append to services
+#   based on how many xbnets you want to create
+
+version: '3.8'
+
+services:
+  xbnet0:
+    build: .
+    container_name: xbnet0
+    privileged: true
+    env_file:
+      - .env
+    devices:
+      - "${XBEE0_PORT}:${XBEE0_PORT}"
+    command: >
+      bash -c "
+        set -x;
+        xbnet -d --serial-speed ${XBEE0_BAUDRATE} ${XBEE0_PORT} tun;
+        ip addr add ${XBEE0_NET_IP}/24 dev xbnet0;
+        ip link set dev xbnet0 up;
+        ping -c 4 ${PING0_TARGET};
+        sleep infinity
+      "
+
+  xbnet1:
+    build: .
+    container_name: xbnet1
+    privileged: true
+    env_file:
+      - .env
+    devices:
+      - "${XBEE1_PORT}:${XBEE1_PORT}"
+    command: >
+      bash -c "
+        set -x;
+        xbnet -d --serial-speed ${XBEE1_BAUDRATE} ${XBEE0_PORT} tun;
+        ip addr add ${XBEE1_NET_IP}/24 dev xbnet1;
+        ip link set dev xbnet1 up;
+        ping -c 4 ${PING1_TARGET};
+        sleep infinity
+      "

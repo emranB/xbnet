@@ -1,0 +1,89 @@
+# version: '3.8'
+
+# services:
+#   xbnet-node:
+#     build: .
+#     container_name: xbnet_node
+#     privileged: true
+#     env_file: .env
+#     networks:
+#       # xbee_net:
+#       #   ipv4_address: ${XBEE0_NET_SRC_IP}  # Ensure this IP belongs to the xbee_net subnet
+#       # ipvlan_net:
+#       #   ipv4_address: ${DEFAULT_IPVLAN_IP}  # Assign an IP within the same range as your host's Wi-Fi
+#       macvlan_net:
+#         ipv4_address: ${DEFAULT_MACVLAN_IP}  # Assign an IP within the same range as your host's Wi-Fi
+    
+
+# networks:
+#   # 1. Docker's internal way of communicating between host and containers - Support 2 way comms
+#   # xbee_net:
+#   #   driver: bridge
+#   #   ipam:
+#   #     config:
+#   #       - subnet: 192.168.2.0/24  # Ensure your xbnet IPs are in this range
+  
+#   # 2. ipvlan working ok for comms from container to host, but not host to container
+#   # ipvlan_net:
+#   #   driver: ipvlan
+#   #   driver_opts:
+#   #     mode: l3  # Use L3 mode, which is simpler for most setups
+#   #     parent: wlp0s20f3  # This should be your host's Wi-Fi or Ethernet interface
+#   #   ipam:
+#   #     config:
+#   #       - subnet: ${BASE_SUBNET}.0/24  # Match the Wi-Fi network range
+#   #         gateway: ${DEFAULT_GATEWAY} # Your router's gateway
+  
+#   # 3. macvlan not working for some reason
+#   macvlan_net:
+#     driver: macvlan
+#     driver_opts:
+#       parent: wlp0s20f3  # This should be your host's Wi-Fi interface
+#     ipam:
+#       config:
+#         - subnet: ${BASE_SUBNET}.0/24  # Match the Wi-Fi network range
+#           gateway: ${DEFAULT_GATEWAY}  # Your router's gateway
+
+
+
+
+
+
+
+
+
+
+
+
+
+##############################################################################
+
+
+
+version: '3.8'
+
+services:
+  xbnet-node:
+    build: .
+    container_name: xbnet_node
+    privileged: true
+    env_file:
+      - .env
+    command: bash /entrypoint.sh
+    # network_mode: "host"
+
+
+
+    # command: /usr/bin/supervisord -c  /etc/supervisor/conf.d/supervisord.conf
+    # command: tail -f /dev/null
+#     networks:
+#       xbee_net:
+#         ipv4_address: ${XBEE_NET_SRC_IP}  # Ensure this IP belongs to the xbee_net subnet
+
+# networks:
+#   xbee_net:
+#     driver: bridge
+#     ipam:
+#       config:
+#         - subnet: ${BASE_SUBNET}.0/24  # Match the network's subnet
+#           gateway: ${DEFAULT_GATEWAY}  # Gateway for central router

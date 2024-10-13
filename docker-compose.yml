@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  xbnet-node:
+    build: .
+    container_name: xbnet_node
+    privileged: true
+    environment:
+      - XBEE_INDEX=1
+      - XBEE_BAUDRATE=230400
+      - XBEE_PORT=/dev/ttyUSB0
+      - XBNET_BASE_SUBNET=2.2.2
+      - XBNET_INTERFACE_TYPE=gateway
+      - XBNET_PROTO=tap
+    command: bash /entrypoint.sh
+    network_mode: host
+#     networks:
+#       eth0:
+#         ipv4_address: 10.10.10.100
+
+# networks:
+#   # Assigning a static IP to eth0 interface, so that it stays the same everytime the container is started
+#   eth0:
+#     ipam:
+#       config:
+#         - subnet: 10.10.10.0/24
+#           gateway: 10.10.10.1 
